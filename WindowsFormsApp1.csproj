@@ -196,6 +196,12 @@
     <Compile Include="login.Designer.cs">
       <DependentUpon>login.cs</DependentUpon>
     </Compile>
+    <Compile Include="MatchFix.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MatchFix.Designer.cs">
+      <DependentUpon>MatchFix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Player.cs" />
     <Compile Include="playersAdd.cs">
       <SubType>Form</SubType>
@@ -216,6 +222,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="login.resx">
       <DependentUpon>login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MatchFix.resx">
+      <DependentUpon>MatchFix.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="playersAdd.resx">
       <DependentUpon>playersAdd.cs</DependentUpon>

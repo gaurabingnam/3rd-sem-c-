@@ -179,48 +179,8 @@ namespace WindowsFormsApp1
                 MessageBox.Show("Error loading data: " + ex.Message);
             }
         }
-//        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-//        {
-//            try
-//            {
-             
 
-//                    using (SqlConnection connection = new SqlConnection(conStr))
-//                    {
-//                        connection.Open();
-
-//                        string query = @"SELECT ID, FullName, Country, Contact, Email, Age 
-//                             FROM LibraryRecords
-//                             ";
-
-//                        var playerData = connection.QueryFirstOrDefault<Player>(query, new { ID = selectedId });
-
-//                        if (playerData != null)
-//                        {
-//                            textBox1.Text = playerData.FullName ?? "";
-//                            textBox4.Text = playerData.Country ?? "";
-//                            textBox5.Text = playerData.Contact ?? "";
-//                            textBox6.Text = playerData.Email ?? "";
-//                            textBox7.Text = playerData.Age?.ToString() ?? "";
-//                        }
-//                    }
-//                }
-            
-//            catch (Exception ex)
-//            {
-//                MessageBox.Show("Search error: " + ex.Message);
-//            }
-//}
     }
 
-    // ✅ Player model
-    //public class Player
-    //{
-    //    public int ID { get; set; }
-    //    public string FullName { get; set; }
-    //    public string Country { get; set; }
-    //    public string Contact { get; set; }
-    //    public string Email { get; set; }
-    //    public int? Age { get; set; }
-    //}
+  
 }
