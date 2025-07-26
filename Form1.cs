@@ -47,8 +47,8 @@ namespace WindowsFormsApp1
                         cmd.Parameters.AddWithValue("@name", textBox1.Text.Trim());     // Full Name
                         cmd.Parameters.AddWithValue("@email", textBox3.Text.Trim());    // Email
                         cmd.Parameters.AddWithValue("@password", textBox4.Text.Trim()); // Password
-                        cmd.Parameters.AddWithValue("@contact", textBox5.Text.Trim());  // Contact
-                        cmd.Parameters.AddWithValue("@add", textBox6.Text.Trim());      // Address
+                        cmd.Parameters.AddWithValue("@contact", textBox6.Text.Trim());  // Contact
+                        cmd.Parameters.AddWithValue("@add", textBox7.Text.Trim());      // Address
 
                         con.Open();
                         int rowsAffected = cmd.ExecuteNonQuery();

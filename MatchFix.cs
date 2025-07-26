@@ -30,11 +30,14 @@ namespace WindowsFormsApp1
             comboBox3.SelectedIndexChanged += (s, e) => fetch(comboBox3);
             comboBox2.SelectedIndexChanged += (s, e) => fetch(comboBox2);
 
+
         }
 
         private void MatchFix_Load(object sender, EventArgs e)
         {
+            LoadMatchResults();
             LoadComboBoxes();
+            FormatDataGridView();
         }
 
         private void LoadComboBoxes()
@@ -73,6 +76,7 @@ namespace WindowsFormsApp1
 
         private void fetch(ComboBox comboBox)
         {
+          
             if (comboBox.SelectedItem != null)
             {
                 try
@@ -296,6 +300,36 @@ namespace WindowsFormsApp1
     // Hide label showing winner (if applicable)
     label4.Visible = false;
         }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+        private void LoadMatchResults()
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    string query = "SELECT * FROM MatchResults ORDER BY ID DESC"; // optional: order by newest first
+                    var results = conn.Query(query).ToList();
+                    dataGridView1.DataSource = results;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading match results: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void FormatDataGridView()
+        {
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.ReadOnly = true;
+            dataGridView1.AllowUserToAddRows = false;
+        }
+
     }
 }
 
