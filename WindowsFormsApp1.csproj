@@ -214,6 +214,9 @@
     <EmbeddedResource Include="AddPlayer.resx">
       <DependentUpon>AddPlayer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Dadhboard.resx">
+      <DependentUpon>Dadhboard.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="edit.resx">
       <DependentUpon>edit.cs</DependentUpon>
     </EmbeddedResource>

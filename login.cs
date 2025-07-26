@@ -66,5 +66,13 @@ namespace WindowsFormsApp1
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var dash = new Form1();
+            this.Hide();
+            dash.ShowDialog();
+            this.Show();
+        }
     }
 }

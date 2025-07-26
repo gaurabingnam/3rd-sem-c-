@@ -1,143 +1,5 @@
-﻿//using Dapper;
-//using System;
-//using System.Data;
-//using System.Data.SqlClient;
-//using System.Windows.Forms;
+﻿
 
-//namespace WindowsFormsApp1
-//{
-//    public partial class MatchFix : Form
-//    {
-//        private string connectionString = "Data Source=SEESAM\\SQLEXPRESS;Initial Catalog=project;Integrated Security=True;Encrypt=False";
-
-//        public MatchFix()
-//        {
-//            InitializeComponent();
-//        }
-
-//        private void MatchFix_Load(object sender, EventArgs e)
-//        {
-//           LoadComboBoxes();
-//            fetch();
-//            //FetchPlayerData();
-//        }
-
-//        private void LoadComboBoxes()
-//        {
-//            try
-//            {
-//                using (SqlConnection conn = new SqlConnection(connectionString))
-//                {
-//                    conn.Open();
-//                    string query = "SELECT ID FROM Players";
-//                    SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
-//                    DataTable dt = new DataTable();
-//                    adapter.Fill(dt);
-
-//                    if (dt.Rows.Count > 0)
-//                    {
-//                        // Bind to comboBox3 (Player 1) only
-//                        comboBox3.DataSource = dt;
-//                        comboBox3.DisplayMember = "ID";
-//                        comboBox3.ValueMember = "ID";
-//                        comboBox3.SelectedIndex = -1;
-//                    }
-//                    else
-//                    {
-//                        MessageBox.Show("No players found in the database.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-//                    }
-//                }
-//            }
-//            catch (Exception ex)
-//            {
-//                MessageBox.Show($"Error loading players: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-//            }
-//        }
-
-//        private void fetch()
-//        {
-//            var x = comboBox3.SelectedItem as Player;
-//            if (!string.IsNullOrEmpty(comboBox3.Text))
-//            {
-//                textBox9.Text = x.FullName;
-//                textBox8.Text = x.Country;
-//                textBox7.Text = x.Age?.ToString();
-//            }
-//}
-////private void FetchPlayerData(int id)
-////        {
-////            try
-////            {
-////                using (IDbConnection db = new SqlConnection(connectionString))
-////                {
-////                    var player = db.QueryFirstOrDefault<Player>("SELECT ID, FullName, Country, Age FROM Players WHERE ID = @ID", new { ID = id });
-
-////                    if (player != null)
-////                    {
-////                        textBox9.Text = player.FullName ?? "";
-////                        textBox8.Text = player.Country ?? "";
-////                        textBox7.Text = player.Age?.ToString() ?? "";
-////                    }
-////                    else
-////                    {
-////                        textBox9.Text = "";
-////                        textBox8.Text = "";
-////                        textBox7.Text = "";
-////                        MessageBox.Show($"No player found with ID: {id}", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-////                    }
-////                }
-////            }
-////            catch (Exception ex)
-////            {
-////                textBox9.Text = "";
-////                textBox8.Text = "";
-////                textBox7.Text = "";
-////                MessageBox.Show($"Error fetching player: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-////            }
-////        }
-//        private void panel1_Paint(object sender, PaintEventArgs e)
-//        {
-
-//        }
-//        private void button1_Click(object sender, EventArgs e)
-//        {
-//            // Clear all textboxes and reset combo boxes
-//            //textBox9.Clear();
-//            //textBox8.Clear();
-//            //textBox7.Clear();
-//            //textBox4.Clear();
-//            //textBox5.Clear();
-//            //textBox6.Clear();
-//            //comboBox3.SelectedIndex = -1;
-//            //comboBox2.SelectedIndex = -1;
-//        }
-
-//        private void button2_Click(object sender, EventArgs e)
-//        {
-//            // Placeholder for OK button functionality
-//            MessageBox.Show("Match details saved!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-//        }
-
-//        private void comboBox3_SelectedIndexChanged_1(object sender, EventArgs e)
-//        {
-//            fetch();
-//            if (comboBox3.SelectedItem is Player selectedPlayer)
-//            {
-//                //FetchPlayerData(selectedPlayer.ID);
-//            }
-//        }
-
-//        private void comboBox2_SelectedIndexChanged_1(object sender, EventArgs e)
-//        {
-
-//        }
-
-//        private void button2_Click_1(object sender, EventArgs e)
-//        {
-
-//        }
-//    }
-//}
 using Dapper;
 using System;
 using System.Data;
@@ -153,12 +15,21 @@ namespace WindowsFormsApp1
     public partial class MatchFix : Form
     {
         private string connectionString = "Data Source=SEESAM\\SQLEXPRESS;Initial Catalog=project;Integrated Security=True;Encrypt=False";
+        //private object lable4;
 
         public MatchFix()
         {
             InitializeComponent();
+
+            numericUpDown1.Maximum = 11;
+            numericUpDown2.Maximum = 11;
+
+            numericUpDown1.ValueChanged += numericUpDown1_ValueChanged;
+            numericUpDown2.ValueChanged += numericUpDown2_ValueChanged;
+
             comboBox3.SelectedIndexChanged += (s, e) => fetch(comboBox3);
             comboBox2.SelectedIndexChanged += (s, e) => fetch(comboBox2);
+
         }
 
         private void MatchFix_Load(object sender, EventArgs e)
@@ -288,5 +159,144 @@ namespace WindowsFormsApp1
                 }
             }
         }
+
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+         
+        }
+
+        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void numericUpDown1_ValueChanged_1(object sender, EventArgs e)
+        {
+            if (numericUpDown1.Value == 11)
+            {
+                label4.Visible = true;
+                numericUpDown2.Enabled = false;
+
+                var winner = comboBox3.SelectedItem as Player;
+                var loser = comboBox2.SelectedItem as Player;
+
+                if (winner != null && loser != null)
+                    SaveMatchToDatabase(winner, 11, loser, (int)numericUpDown2.Value); // <-- Winner: Player1, Loser: Player2
+            }
+            else
+            {
+                label4.Visible = false;
+                numericUpDown2.Enabled = true;
+            }
+        }
+
+        private void numericUpDown2_ValueChanged_1(object sender, EventArgs e)
+        {
+         
+            if (numericUpDown2.Value == 11)
+            {
+                label4.Visible = true;
+                numericUpDown1.Enabled = false;
+
+                var winner = comboBox2.SelectedItem as Player;
+                var loser = comboBox3.SelectedItem as Player;
+
+                if (winner != null && loser != null)
+                    SaveMatchToDatabase(winner, 11, loser, (int)numericUpDown1.Value); // <-- Winner: Player2, Loser: Player1
+            }
+            else
+            {
+                label4.Visible = false;
+                numericUpDown1.Enabled = true;
+            }
+        }
+        
+        //private void SaveWinnerToDatabase(Player player, int score)
+        //{
+        //    try
+        //    {
+        //        using (SqlConnection conn = new SqlConnection(connectionString))
+        //        {
+        //            conn.Open();
+        //            string insertQuery = "INSERT INTO MatchResults (PlayerID, FullName, Score, Result) VALUES (@PlayerID, @FullName, @Score, @Result)";
+        //            conn.Execute(insertQuery, new
+        //            {
+        //                PlayerID = player.ID,
+        //                FullName = player.FullName,
+        //                Score = score,
+        //                Result = "Winner"
+        //            });
+        //        }
+
+        //        MessageBox.Show($"{player.FullName} saved as Winner!", "Match Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show($"Error saving match result: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+        //}
+        private void SaveMatchToDatabase(Player winner, int winnerScore, Player loser, int loserScore)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string insertQuery = "INSERT INTO MatchResults (PlayerID, FullName, Score, Result) VALUES (@PlayerID, @FullName, @Score, @Result)";
+
+                    // Insert Winner
+                    conn.Execute(insertQuery, new
+                    {
+                        PlayerID = winner.ID,
+                        FullName = winner.FullName,
+                        Score = winnerScore,
+                        Result = "Winner"
+                    });
+
+                    // Insert Loser
+                    conn.Execute(insertQuery, new
+                    {
+                        PlayerID = loser.ID,
+                        FullName = loser.FullName,
+                        Score = loserScore,
+                        Result = "Loser"
+                    });
+                }
+
+                MessageBox.Show($"{winner.FullName} (Winner) and {loser.FullName} (Loser) saved!", "Match Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error saving match result: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+               // Clear TextBoxes
+    textBox4.Clear();
+    textBox5.Clear();
+    textBox6.Clear();
+    textBox7.Clear();
+    textBox8.Clear();
+    textBox9.Clear();
+
+    // Reset ComboBoxes
+    comboBox2.SelectedIndex = -1;
+    comboBox3.SelectedIndex = -1;
+
+    // Reset NumericUpDowns
+    numericUpDown1.Value = 0;
+    numericUpDown2.Value = 0;
+    numericUpDown1.Enabled = true;
+    numericUpDown2.Enabled = true;
+
+    // Hide label showing winner (if applicable)
+    label4.Visible = false;
+        }
     }
 }
+
+
